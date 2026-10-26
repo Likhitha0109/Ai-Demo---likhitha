@@ -1,1 +1,444 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GlowShop | Online Store</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #f5f3ff, #fff1f7, #eff6ff);
+  color: #25213b;
+  min-height: 100vh;
+}
+
+header {
+  padding: 22px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.logo {
+  font-size: 26px;
+  font-weight: bold;
+  background: linear-gradient(90deg, #7c3aed, #ec4899);
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.cart {
+  background: linear-gradient(135deg, #7c3aed, #ec4899);
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.hero {
+  margin: 35px auto;
+  width: 84%;
+  padding: 55px 35px;
+  border-radius: 28px;
+  background: linear-gradient(120deg, #7c3aed, #d946ef, #fb7185);
+  color: white;
+  box-shadow: 0 15px 40px #a78bfa55;
+}
+
+.hero h1 {
+  font-size: clamp(30px, 5vw, 48px);
+  margin-bottom: 15px;
+}
+
+.hero p {
+  line-height: 1.6;
+  margin-bottom: 22px;
+}
+
+.hero button {
+  background: white;
+  color: #7c3aed;
+  padding: 13px 22px;
+  border: none;
+  border-radius: 25px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.container {
+  width: 84%;
+  margin: 0 auto 50px;
+}
+
+.search {
+  width: 100%;
+  padding: 16px 20px;
+  border: 1px solid #e9d5ff;
+  border-radius: 16px;
+  outline: none;
+  margin-bottom: 25px;
+  font-size: 15px;
+  background: white;
+}
+
+.search:focus {
+  border-color: #a855f7;
+  box-shadow: 0 0 0 3px #a855f722;
+}
+
+.categories {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+
+.category {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 22px;
+  background: white;
+  color: #6b21a8;
+  cursor: pointer;
+}
+
+.category.active {
+  color: white;
+  background: linear-gradient(90deg, #7c3aed, #ec4899);
+}
+
+h2 {
+  margin-bottom: 22px;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 22px;
+}
+
+.product {
+  background: rgba(255,255,255,0.9);
+  border-radius: 22px;
+  padding: 18px;
+  box-shadow: 0 8px 25px #8b5cf615;
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.product:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 30px #8b5cf630;
+}
+
+.product-image {
+  height: 155px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  font-size: 75px;
+  background: linear-gradient(135deg, #ede9fe, #fce7f3);
+  margin-bottom: 17px;
+}
+
+.product h3 {
+  margin-bottom: 9px;
+}
+
+.product p {
+  color: #77718a;
+  font-size: 14px;
+  margin-bottom: 14px;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.price {
+  color: #7c3aed;
+  font-weight: bold;
+  font-size: 19px;
+}
+
+.add {
+  padding: 10px 13px;
+  color: white;
+  background: linear-gradient(120deg, #7c3aed, #ec4899);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.add:hover, .cart:hover {
+  opacity: 0.85;
+}
+
+.empty {
+  color: #77718a;
+  padding: 25px 0;
+}
+
+footer {
+  text-align: center;
+  padding: 25px;
+  color: #77718a;
+  font-size: 14px;
+}
+
+.cart-panel {
+  display: none;
+  background: white;
+  border-radius: 20px;
+  padding: 22px;
+  margin-bottom: 28px;
+  box-shadow: 0 8px 25px #8b5cf622;
+}
+
+.cart-panel h2 {
+  margin-bottom: 16px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.remove {
+  color: #e11d48;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.checkout {
+  margin-top: 18px;
+  padding: 13px 20px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(120deg, #7c3aed, #ec4899);
+  color: white;
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  header {
+    padding: 18px 5%;
+  }
+
+  .hero, .container {
+    width: 92%;
+  }
+
+  .hero {
+    padding: 35px 22px;
+  }
+
+  .products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .product {
+    padding: 12px;
+  }
+
+  .product-image {
+    height: 115px;
+    font-size: 55px;
+  }
+
+  .price-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .add {
+    width: 100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">✦ GlowShop</div>
+  <button class="cart" onclick="toggleCart()">
+    🛒 Cart (<span id="cart-count">0</span>)
+  </button>
+</header>
+
+<section class="hero">
+  <h1>Find Your Style ✨</h1>
+  <p>Discover amazing products at amazing prices.<br>
+     Your next favorite thing is just a click away.</p>
+  <button onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">
+    Shop Now →
+  </button>
+</section>
+
+<main class="container" id="shop">
+  <input
+    class="search"
+    id="search"
+    type="search"
+    placeholder="🔍 Search products..."
+    oninput="renderProducts()"
+  >
+
+  <div class="categories">
+    <button class="category active" onclick="setCategory('All', this)">All</button>
+    <button class="category" onclick="setCategory('Electronics', this)">Electronics</button>
+    <button class="category" onclick="setCategory('Fashion', this)">Fashion</button>
+    <button class="category" onclick="setCategory('Accessories', this)">Accessories</button>
+  </div>
+
+  <section class="cart-panel" id="cart-panel">
+    <h2>🛍️ Your Cart</h2>
+    <div id="cart-items"></div>
+    <h3 id="cart-total">Total: ₹0</h3>
+    <button class="checkout" onclick="checkout()">Checkout →</button>
+  </section>
+
+  <h2>Featured Products</h2>
+  <div class="products" id="products"></div>
+</main>
+
+<footer>Made with 💜 by GlowShop · Happy Shopping!</footer>
+
+<script>
+const products = [
+  {id: 1, name: "Wireless Headphones", category: "Electronics", price: 1999, icon: "🎧"},
+  {id: 2, name: "Classic Sneakers", category: "Fashion", price: 2499, icon: "👟"},
+  {id: 3, name: "Smart Watch", category: "Electronics", price: 2999, icon: "⌚"},
+  {id: 4, name: "Stylish Backpack", category: "Fashion", price: 1299, icon: "🎒"},
+  {id: 5, name: "Sunglasses", category: "Accessories", price: 799, icon: "🕶️"},
+  {id: 6, name: "Premium Camera", category: "Electronics", price: 5999, icon: "📷"},
+  {id: 7, name: "Handbag", category: "Fashion", price: 1599, icon: "👜"},
+  {id: 8, name: "Wrist Bracelet", category: "Accessories", price: 499, icon: "📿"}
+];
+
+let category = "All";
+let cart = [];
+
+function money(amount) {
+  return "₹" + amount.toLocaleString("en-IN");
+}
+
+function renderProducts() {
+  const query = document.getElementById("search").value.toLowerCase();
+
+  const filtered = products.filter(p =>
+    (category === "All" || p.category === category) &&
+    p.name.toLowerCase().includes(query)
+  );
+
+  document.getElementById("products").innerHTML = filtered.length
+    ? filtered.map(p => `
+      <article class="product">
+        <div class="product-image">${p.icon}</div>
+        <h3>${p.name}</h3>
+        <p>${p.category}</p>
+        <div class="price-row">
+          <span class="price">${money(p.price)}</span>
+          <button class="add" onclick="addToCart(${p.id})">
+            + Add
+          </button>
+        </div>
+      </article>
+    `).join("")
+    : '<p class="empty">No products found. Try another search.</p>';
+}
+
+function setCategory(value, button) {
+  category = value;
+  document.querySelectorAll(".category").forEach(btn =>
+    btn.classList.remove("active")
+  );
+  button.classList.add("active");
+  renderProducts();
+}
+
+function addToCart(id) {
+  const item = cart.find(p => p.id === id);
+
+  if (item) {
+    item.quantity++;
+  } else {
+    cart.push({...products.find(p => p.id === id), quantity: 1});
+  }
+
+  renderCart();
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(p => p.id !== id);
+  renderCart();
+}
+
+function renderCart() {
+  const count = cart.reduce((sum, p) => sum + p.quantity, 0);
+  const total = cart.reduce((sum, p) => sum + p.price * p.quantity, 0);
+
+  document.getElementById("cart-count").textContent = count;
+  document.getElementById("cart-total").textContent = "Total: " + money(total);
+
+  document.getElementById("cart-items").innerHTML = cart.length
+    ? cart.map(p => `
+      <div class="cart-item">
+        <span>${p.icon} ${p.name} × ${p.quantity}</span>
+        <span>
+          ${money(p.price * p.quantity)}
+          <button class="remove" onclick="removeFromCart(${p.id})">✕</button>
+        </span>
+      </div>
+    `).join("")
+    : '<p class="empty">Your cart is empty.</p>';
+}
+
+function toggleCart() {
+  const panel = document.getElementById("cart-panel");
+  panel.style.display = panel.style.display === "block" ? "none" : "block";
+  renderCart();
+  if (panel.style.display === "block") {
+    panel.scrollIntoView({behavior: "smooth", block: "nearest"});
+  }
+}
+
+function checkout() {
+  if (cart.length === 0) {
+    alert("Your cart is empty!");
+    return;
+  }
+
+  alert("Demo checkout! Connect a payment gateway to accept real orders.");
+}
+
+renderProducts();
+renderCart();
+</script>
+
+</body>
+</html>
+
